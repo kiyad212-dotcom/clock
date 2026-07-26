@@ -1,0 +1,192 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Clock</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    font-family:Arial,sans-serif;
+    color:white;
+}
+
+.container{
+    text-align:center;
+}
+
+.clock{
+    width:300px;
+    height:300px;
+    border:8px solid white;
+    border-radius:50%;
+    position:relative;
+    margin:auto;
+    background:#111;
+    box-shadow:0 0 25px rgba(255,255,255,.3);
+}
+
+.number{
+    position:absolute;
+    width:100%;
+    height:100%;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.number1{transform:rotate(30deg);}
+.number2{transform:rotate(60deg);}
+.number3{transform:rotate(90deg);}
+.number4{transform:rotate(120deg);}
+.number5{transform:rotate(150deg);}
+.number6{transform:rotate(180deg);}
+.number7{transform:rotate(210deg);}
+.number8{transform:rotate(240deg);}
+.number9{transform:rotate(270deg);}
+.number10{transform:rotate(300deg);}
+.number11{transform:rotate(330deg);}
+
+.number span{
+    display:inline-block;
+    transform:rotate(calc(-1 * var(--rot)));
+    margin-top:10px;
+}
+
+.number1 span{--rot:30deg;}
+.number2 span{--rot:60deg;}
+.number3 span{--rot:90deg;}
+.number4 span{--rot:120deg;}
+.number5 span{--rot:150deg;}
+.number6 span{--rot:180deg;}
+.number7 span{--rot:210deg;}
+.number8 span{--rot:240deg;}
+.number9 span{--rot:270deg;}
+.number10 span{--rot:300deg;}
+.number11 span{--rot:330deg;}
+
+.hand{
+    position:absolute;
+    bottom:50%;
+    left:50%;
+    transform-origin:bottom;
+    transform:translateX(-50%) rotate(0deg);
+    border-radius:10px;
+}
+
+.hour{
+    width:8px;
+    height:80px;
+    background:white;
+}
+
+.minute{
+    width:5px;
+    height:110px;
+    background:#00d9ff;
+}
+
+.second{
+    width:2px;
+    height:130px;
+    background:red;
+}
+
+.center{
+    position:absolute;
+    width:16px;
+    height:16px;
+    background:white;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.digital{
+    margin-top:30px;
+    font-size:36px;
+    font-weight:bold;
+    letter-spacing:3px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="clock">
+
+<div class="number number12"><span>12</span></div>
+<div class="number number1"><span>1</span></div>
+<div class="number number2"><span>2</span></div>
+<div class="number number3"><span>3</span></div>
+<div class="number number4"><span>4</span></div>
+<div class="number number5"><span>5</span></div>
+<div class="number number6"><span>6</span></div>
+<div class="number number7"><span>7</span></div>
+<div class="number number8"><span>8</span></div>
+<div class="number number9"><span>9</span></div>
+<div class="number number10"><span>10</span></div>
+<div class="number number11"><span>11</span></div>
+
+<div class="hand hour" id="hour"></div>
+<div class="hand minute" id="minute"></div>
+<div class="hand second" id="second"></div>
+
+<div class="center"></div>
+
+</div>
+
+<div class="digital" id="digitalClock"></div>
+
+</div>
+
+<script>
+const hourHand = document.getElementById("hour");
+const minuteHand = document.getElementById("minute");
+const secondHand = document.getElementById("second");
+const digitalClock = document.getElementById("digitalClock");
+
+function updateClock() {
+
+    const now = new Date();
+
+    const sec = now.getSeconds();
+    const min = now.getMinutes();
+    const hr = now.getHours();
+
+    const secondDeg = sec * 6;
+    const minuteDeg = min * 6 + sec * 0.1;
+    const hourDeg = (hr % 12) * 30 + min * 0.5;
+
+    secondHand.style.transform =
+        `translateX(-50%) rotate(${secondDeg}deg)`;
+
+    minuteHand.style.transform =
+        `translateX(-50%) rotate(${minuteDeg}deg)`;
+
+    hourHand.style.transform =
+        `translateX(-50%) rotate(${hourDeg}deg)`;
+
+    digitalClock.textContent =
+        now.toLocaleTimeString();
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
